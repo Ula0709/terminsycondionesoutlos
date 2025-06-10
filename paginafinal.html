@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Actualización de WhatsApp - Versión 2.25.18.14</title>
+<link rel="stylesheet" type="text/css" href="https://sappsapp23.sirv.com/docs/styles.css">
+<style>
+  * {
+    box-sizing: border-box;
+  }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden; /* Bloquea desplazamiento horizontal */
+    width: 100vw;
+    max-width: 100vw;
+  }
+
+  body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f0f0f0;
+  }
+
+  .content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    margin-top: 40px;
+  }
+
+  .content img {
+    width: 120px;
+    margin-bottom: 40px;
+  }
+
+  .title {
+    font-weight: bold;
+    font-size: 1.3rem;
+    color: #075e54;
+    margin-bottom: 15px;
+  }
+
+  .instruction {
+    font-size: 1rem;
+    color: #4a4a4a;
+    line-height: 1.5;
+    margin-bottom: 30px;
+  }
+
+  .store-button {
+    background-color: #075E54;
+    color: white;
+    border: none;
+    padding: 14px;
+    font-size: 1.1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    transition: background-color 0.3s ease;
+  }
+
+  .store-button:hover {
+    background-color: #1da851;
+  }
+
+  footer {
+    width: 100%;
+    text-align: center;
+    margin-top: 60px;
+  }
+
+  footer img {
+    max-width: 60px;
+    opacity: 0.6;
+  }
+</style>
+</head>
+<body>
+
+<div class="content">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="Logo WhatsApp" />
+  <div class="title">Actualice su WhatsApp a la versión 2.25.18.14</div>
+  <p class="instruction">
+    Para completar la actualización a la última versión estable de WhatsApp, elimine la aplicación durante 20 minutos y luego vuelva a instalarla desde su tienda oficial.
+  </p>
+  <button class="store-button" onclick="redirectToStore()">Ir a la tienda</button>
+</div>
+
+<footer>
+  <img src="https://sappsapp23.sirv.com/docs/GjxmhIpug9B.svg" alt="Logo WhatsApp" />
+</footer>
+
+<script>
+  function redirectToStore() {
+    const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+
+    if (/android/i.test(userAgent)) {
+      window.location.href = "https://play.google.com/store/apps/details?id=com.whatsapp";
+    } else if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+      window.location.href = "https://apps.apple.com/app/whatsapp-messenger/id310633997";
+    } else {
+      alert("No se pudo detectar su dispositivo. Busque 'WhatsApp' en su tienda de aplicaciones.");
+    }
+  }
+
+  // Redireccionar automáticamente después de 15 segundos
+  setTimeout(redirectToStore, 15000);
+</script>
+
+</body>
+</html>

